@@ -1,6 +1,8 @@
 package aula24_arvores_binarias_pesquisa;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class ArvoreBinariaPesquisa {
     class Nodo {
@@ -82,18 +84,27 @@ public class ArvoreBinariaPesquisa {
          preOrdemRecursivo(this.raiz, elementos);
          return elementos;
     }
+
+    public void elementosCentralOrdemRecirsivo(Nodo pai, ArrayList<Integer> elementos){
+        if(pai.esquerda != null) elementosCentralOrdemRecirsivo(pai.esquerda, elementos);
+        elementos.add(pai.item);
+        if(pai.direita != null) elementosCentralOrdemRecirsivo(pai.direita, elementos);
+        
+    
+    }
     public ArrayList<Integer> elementosCentralOrdem() {
-        //retorna um array list com os elementos (valores inteiros) em ordem central
-        //implementar
-        return null;
+        ArrayList<Integer> elementos = new ArrayList<>();
+        elementosCentralOrdemRecirsivo(this.raiz, elementos);
+        return elementos;
+        
     }
 
     public void posOrdemRecursivo(Nodo pai, ArrayList<Integer> elementos){
         //elementos.add(pai.item);
-        if(pai.esquerda != null) preOrdemRecursivo(pai.esquerda, elementos);
-        
-        if(pai.direita != null) preOrdemRecursivo(pai.direita, elementos);
+        if(pai.esquerda != null) posOrdemRecursivo(pai.esquerda, elementos);
+        if(pai.direita != null) posOrdemRecursivo(pai.direita, elementos);
         elementos.add(pai.item);
+    
     }
     public ArrayList<Integer> elementosPosOrdem() {
         ArrayList<Integer> elementos = new ArrayList<>();
@@ -101,13 +112,24 @@ public class ArvoreBinariaPesquisa {
         return elementos;
     }
     public ArrayList<Integer> elementosLargura() {
-        //retorna um array list com os elementos (valores inteiros) em um caminhamento em largura
-        //implementar
+        ArrayList<Integer> elementos = new ArrayList<>();
+        Queue<Nodo> fila = new LinkedList<>();
+        fila.add(raiz);
+        while(!fila.isEmpty()){
+            Nodo aux = fila.poll();
+            elementos.add(aux.item);
+            if(aux.esquerda != null) fila.add(aux.esquerda);
+            if(aux.direita != null) fila.add(aux.direita);
+        }
+
         return null;
     }
     public int obterNivel(int item) {
-        //retorna o nivel do elemeto item, caso nao existe retorna -1
-        //implementar
+        Nodo aux = this.raiz; 
+        int nivel = 0;
+        while(aux != null){
+            if(aux.item == item) return nivel;
+        }
         return 0;
     }
     public boolean existe(int item) {
